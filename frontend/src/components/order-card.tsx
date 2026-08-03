@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users } from "lucide-react";
@@ -10,6 +13,34 @@ export function OrderCard({ order }: { order: Order }) {
   const platform = getPlatform(order.platform);
   const filled = order.participants.length;
   const fillPct = Math.min(100, (filled / order.maxParticipants) * 100);
+
+  const [timeLeft, setTimeLeft] = useState<string>("");
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const expires = new Date(order.expiresAt);
+      const diffMs = expires.getTime() - now.getTime();
+      
+      if (diffMs <= 0) {
+        setTimeLeft("Closed");
+        return;
+      }
+      
+      const diffMins = Math.floor(diffMs / 60000);
+      if (diffMins < 60) {
+        setTimeLeft(`${diffMins}m`);
+      } else {
+        const hours = Math.floor(diffMins / 60);
+        const mins = diffMins % 60;
+        setTimeLeft(`${hours}h ${mins}m`);
+      }
+    };
+
+    calculateTimeLeft();
+    const interval = setInterval(calculateTimeLeft, 60000);
+    return () => clearInterval(interval);
+  }, [order.expiresAt]);
 
   return (
     <Card className="flex flex-col border-border/70 shadow-sm transition-all hover:shadow-md">
@@ -46,7 +77,7 @@ export function OrderCard({ order }: { order: Order }) {
           <div>
             <p className="text-xs text-muted-foreground">Closes</p>
             <p className="flex items-center justify-center gap-1 text-sm font-semibold text-foreground">
-              <Clock className="h-3 w-3" /> 18m
+              <Clock className="h-3 w-3" /> {timeLeft || "..."}
             </p>
           </div>
         </div>
@@ -69,7 +100,7 @@ export function OrderCard({ order }: { order: Order }) {
       </CardContent>
       <CardFooter className="gap-2 p-5 pt-0">
         <Button asChild variant="outline" className="flex-1">
-          <Link href={`/app/orders/${order.id}`}>Details</Link>
+          <Link href={`/rooms/${order.id}`}>Details</Link>
         </Button>
         <Button className="flex-1">Join Order</Button>
       </CardFooter>

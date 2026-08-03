@@ -17,32 +17,7 @@ interface Message {
   timestamp: string;
 }
 
-const mockMessages: Message[] = [
-  {
-    id: '1',
-    senderId: 'u2',
-    senderName: 'Priya Mehta',
-    senderAvatar: 'https://i.pravatar.cc/150?img=47',
-    content: 'Hey! I added my items to the order. Can you check?',
-    timestamp: '10:15 AM',
-  },
-  {
-    id: '2',
-    senderId: 'u1',
-    senderName: currentUser.name,
-    senderAvatar: currentUser.avatarUrl || '',
-    content: 'Sure, let me check. Looks good!',
-    timestamp: '10:16 AM',
-  },
-  {
-    id: '3',
-    senderId: 'u2',
-    senderName: 'Priya Mehta',
-    senderAvatar: 'https://i.pravatar.cc/150?img=47',
-    content: 'Great! I\'ll place the order in 5 minutes.',
-    timestamp: '10:17 AM',
-  },
-];
+const mockMessages: Message[] = [];
 
 export default function ChatRoomPage({ params }: { params: { roomId?: string } }) {
   const roomId = params.roomId || 'default';

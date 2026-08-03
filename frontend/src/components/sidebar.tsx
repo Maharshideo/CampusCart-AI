@@ -6,7 +6,7 @@ import { LayoutDashboard, Search, PlusCircle, ListChecks, User, Sparkles } from 
 import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "@/components/user-avatar";
-import { currentUser } from "@/data/users";
+import { useUser } from "@/context/user-context";
 import { Button } from "@/components/ui/button";
 
 export const navItems = [
@@ -19,6 +19,7 @@ export const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { user } = useUser();
 
   return (
     <aside className="hidden h-screen w-64 shrink-0 flex-col border-r border-border bg-sidebar p-4 md:flex">
@@ -67,10 +68,10 @@ export function Sidebar() {
           href="/profile"
           className="flex items-center gap-3 rounded-lg p-2 hover:bg-sidebar-accent"
         >
-          <UserAvatar name={currentUser.name} src={currentUser.avatarUrl} />
+          <UserAvatar name={user.name} src={user.avatarUrl} />
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-foreground">{currentUser.name}</p>
-            <p className="truncate text-xs text-muted-foreground">Hostel 12 · IITB</p>
+            <p className="truncate text-sm font-medium text-foreground">{user.name}</p>
+            <p className="truncate text-xs text-muted-foreground">{user.hostelId} · {user.collegeId}</p>
           </div>
         </Link>
       </div>

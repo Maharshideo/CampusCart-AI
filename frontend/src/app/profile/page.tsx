@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from 'react';
 import { Sidebar } from '@/components/sidebar';
 import { Navbar } from '@/components/navbar';
 import { MobileNav } from '@/components/mobile-nav';
@@ -6,9 +9,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { UserAvatar } from '@/components/user-avatar';
-import { currentUser } from '@/data/users';
+import { useUser } from '@/context/user-context';
+import { toast } from 'sonner';
 
 export default function ProfilePage() {
+  const { user, updateUser } = useUser();
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [collegeId, setCollegeId] = useState(user.collegeId);
+  const [hostelId, setHostelId] = useState(user.hostelId);
+
+  const handleSave = () => {
+    updateUser({ name, email, collegeId, hostelId });
+    toast.success("Profile updated successfully!");
+  };
+
   return (
     <div className="flex h-screen bg-background">
       <Sidebar />
@@ -27,30 +42,46 @@ export default function ProfilePage() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-center gap-4">
-                  <UserAvatar name={currentUser.name} src={currentUser.avatarUrl} size="lg" />
+                  <UserAvatar name={user.name} src={user.avatarUrl} size="lg" />
                   <div>
-                    <h2 className="text-xl font-semibold text-foreground">{currentUser.name}</h2>
-                    <p className="text-sm text-muted-foreground">{currentUser.email}</p>
+                    <h2 className="text-xl font-semibold text-foreground">{user.name}</h2>
+                    <p className="text-sm text-muted-foreground">{user.email}</p>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="name">Name</Label>
-                    <Input id="name" defaultValue={currentUser.name} />
+                    <Input
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" defaultValue={currentUser.email} disabled />
+                    <Input
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="college">College</Label>
-                    <Input id="college" defaultValue="IIT Bombay" disabled />
+                    <Input
+                      id="college"
+                      value={collegeId}
+                      onChange={(e) => setCollegeId(e.target.value)}
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="hostel">Hostel</Label>
-                    <Input id="hostel" defaultValue="Hostel 12" disabled />
+                    <Input
+                      id="hostel"
+                      value={hostelId}
+                      onChange={(e) => setHostelId(e.target.value)}
+                    />
                   </div>
-                  <Button>Save Changes</Button>
+                  <Button onClick={handleSave}>Save Changes</Button>
                 </div>
               </CardContent>
             </Card>

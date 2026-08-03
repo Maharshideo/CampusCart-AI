@@ -28,7 +28,7 @@ export default function OnboardingPage() {
 
             <form
               className="mt-6 space-y-4"
-              onSubmit={(e) => { e.preventDefault(); router.push("/app/dashboard"); }}
+              onSubmit={(e) => { e.preventDefault(); router.push("/dashboard"); }}
             >
               <div className="space-y-1.5">
                 <Label htmlFor="name">Full name</Label>

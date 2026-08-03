@@ -15,11 +15,7 @@ export const benefits = [
   { icon: Shield, title: "Trusted by your campus", description: "Verified college email logins. Real students, not bots." },
 ];
 
-export const testimonials = [
-  { id: "t1", name: "Priya Mehta", role: "IIT Bombay · Hostel 12", quote: "I've saved over ₹900 in two months. CartAI finds my hostel-mates before I even open Blinkit.", avatarUrl: "https://i.pravatar.cc/150?img=47" },
-  { id: "t2", name: "Rohan Iyer", role: "IIT Bombay · Hostel 3", quote: "Late-night Zomato runs used to cost me ₹50 in delivery alone. Now I split with 3 friends in 5 minutes.", avatarUrl: "https://i.pravatar.cc/150?img=33" },
-  { id: "t3", name: "Ananya Reddy", role: "IIT Bombay · Hostel 4", quote: "The matching is scary good. It's like CartAI knows when I'm about to crave Maggi.", avatarUrl: "https://i.pravatar.cc/150?img=44" },
-];
+export const testimonials = [];
 
 export const faqs = [
   { q: "Is CampusCart free?", a: "Yes — CampusCart is completely free for students. We only help you save on delivery fees." },
