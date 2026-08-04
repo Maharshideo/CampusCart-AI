@@ -14,7 +14,6 @@ export function UserAvatar({ name, src, size = "md", className }: Props) {
   const initials = name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
   return (
     <Avatar className={cn(sizeMap[size], className)}>
-      {src && <AvatarImage src={src} alt={name} />}
       <AvatarFallback className="bg-accent text-accent-foreground font-medium">{initials}</AvatarFallback>
     </Avatar>
   );

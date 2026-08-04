@@ -11,6 +11,9 @@ import { useOrders } from "@/context/order-context";
 
 export default function DashboardPage() {
   const { orders } = useOrders();
+  
+  const activeOrders = orders.filter(order => new Date(order.expiresAt).getTime() > Date.now());
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/85 backdrop-blur">
@@ -39,9 +42,9 @@ export default function DashboardPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
           <StatsCard 
             label="Active Orders" 
-            value={orders.length.toString()} 
+            value={activeOrders.length.toString()} 
             icon={ShoppingCart} 
-            trend={`${orders.length} this week`} 
+            trend={`${activeOrders.length} this week`} 
           />
           <StatsCard label="Money Saved" value="₹0" icon={DollarSign} trend="₹0 this week" />
           <StatsCard label="Matches Found" value="0" icon={Users} trend="0 this week" />
@@ -58,8 +61,8 @@ export default function DashboardPage() {
             </Link>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
-            {orders.length > 0 ? (
-              orders.slice(0, 2).map(order => <OrderCard key={order.id} order={order} />)
+            {activeOrders.length > 0 ? (
+              activeOrders.slice(0, 2).map(order => <OrderCard key={order.id} order={order} />)
             ) : (
               <p className="text-muted-foreground text-sm col-span-2 text-center py-8">No recent orders found.</p>
             )}
@@ -76,8 +79,8 @@ export default function DashboardPage() {
             </Link>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
-            {orders.length > 2 ? (
-              orders.slice(2, 4).map(order => <OrderCard key={order.id} order={order} />)
+            {activeOrders.length > 2 ? (
+              activeOrders.slice(2, 4).map(order => <OrderCard key={order.id} order={order} />)
             ) : (
               <p className="text-muted-foreground text-sm col-span-2 text-center py-8">No new matches found.</p>
             )}
