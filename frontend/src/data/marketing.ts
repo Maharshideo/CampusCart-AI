@@ -15,7 +15,15 @@ export const benefits = [
   { icon: Shield, title: "Trusted by your campus", description: "Verified college email logins. Real students, not bots." },
 ];
 
-export const testimonials = [];
+interface Testimonial {
+  id: string;
+  name: string;
+  role: string;
+  quote: string;
+  avatarUrl?: string;
+}
+
+export const testimonials: Testimonial[] = [];
 
 export const faqs = [
   { q: "Is CampusCart free?", a: "Yes — CampusCart is completely free for students. We only help you save on delivery fees." },
